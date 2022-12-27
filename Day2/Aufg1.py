@@ -19,19 +19,55 @@ In this example, if you were to follow the strategy guide, you would get a total
 
 What would your total score be if everything goes exactly according to your strategy guide?
 """
-if __name__ == '__main__':
-    counter = -1
-    resultArray = [0 for i in range(500)]
-    f = open("Input", "r")
-    inputString = f.read()
-    arrayOfAllNumbers = inputString.split("\n\n")
+def readInputString():
+    input = open("Input", "r")
+    return input.read()
 
-    for array in arrayOfAllNumbers:
-        counter = counter + 1
-        resultArray[counter] = 0
-        numbersInArray = array.split("\n")
-        for number in numbersInArray:
-            if resultArray[counter] == 0:
-                resultArray[counter] = int(number)
-            else:
-                resultArray[counter] += int(number)
+def getPointsForRound(enemySelection, ownSelection):
+    points = calculatePointsForOwnSelection(ownSelection)
+    if (ownSelection == "X" and enemySelection == "A") or (ownSelection == "Y" and enemySelection == "B") or (ownSelection == "Z" and enemySelection == "C"):
+        points += 3
+
+    elif ownSelection == "X":
+        if enemySelection == "C":
+            points += 6
+
+    elif ownSelection == "Y":
+        if enemySelection == "A":
+            points += 6
+
+    elif ownSelection == "Z":
+        if enemySelection == "B":
+            points += 6
+    return points
+
+
+def calculatePointsForOwnSelection(ownSelection):
+    points = 0
+    if ownSelection == "X":
+        points += 1
+    elif ownSelection == "Y":
+        points += 2
+
+    elif ownSelection == "Z":
+        points += 3
+
+    return points
+
+
+if __name__ == '__main__':
+    inputString = readInputString()
+    arrayOfInputs = inputString.split("\n")
+    points = 0
+
+    for input in arrayOfInputs:
+        inputs = input.split(" ")
+        enemySelection = inputs[0]
+        ownSelection = inputs[1]
+
+        points += getPointsForRound(enemySelection, ownSelection)
+
+    print(points)
+
+
+
