@@ -13,3 +13,24 @@ Following the Elf's instructions for the second column, what would your total sc
 
 '''
 
+from file_reader import fileReader
+from move import Move
+from point_calculator import pointCalculator
+from value_decider import ValueDecider
+if __name__ == '__main__':
+    inputString = fileReader().read_input()
+    arrayOfInputs = inputString.split("\n")
+
+    pointCalculator = pointCalculator()
+
+
+    for input in arrayOfInputs:
+        inputs = input.split(" ")
+        enemySelection = Move(inputs[0]).value
+
+        ownSelection = ValueDecider(inputs[1], enemySelection).value
+
+        pointCalculator.getPointsForMove(ownSelection)
+        pointCalculator.checkResult(ownSelection,enemySelection)
+
+    print(pointCalculator.points)
